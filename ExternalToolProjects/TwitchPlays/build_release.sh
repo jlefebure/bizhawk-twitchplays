@@ -1,0 +1,1 @@
+﻿../.build_release.sh

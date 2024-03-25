@@ -26,6 +26,12 @@ namespace BizHawk.Client.Common
 		public int AxisValue(string name)
 			=> _axisOverrides.TryGetValue(name, out var i) ? i : 0;
 
+
+		public Dictionary<string, bool> GetOverrides()
+		{
+			return _overrides;
+		}
+			
 		public IReadOnlyCollection<(string Name, int Strength)> GetHapticsSnapshot() => throw new NotImplementedException(); // no idea --yoshi
 
 		public void SetHapticChannelStrength(string name, int strength) => throw new NotImplementedException(); // no idea --yoshi
@@ -58,9 +64,9 @@ namespace BizHawk.Client.Common
 
 		public void FrameTick()
 		{
-			_overrides.Clear();
-			_axisOverrides.Clear();
-			_inverses.Clear();
+			//_overrides.Clear();
+			//_axisOverrides.Clear();
+			//_inverses.Clear();
 		}
 	}
 }

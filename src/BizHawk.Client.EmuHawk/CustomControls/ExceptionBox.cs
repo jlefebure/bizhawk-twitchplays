@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace BizHawk.Client.EmuHawk
@@ -78,5 +79,11 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
+		protected override void OnShown(EventArgs e)
+		{
+			base.OnShown(e);
+			File.WriteAllText("error-" + DateTime.Now.ToString("yyyyMMddHHmmss"), txtException.Text);
+
+		}
 	}
 }

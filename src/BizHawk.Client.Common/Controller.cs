@@ -138,19 +138,35 @@ namespace BizHawk.Client.Common
 
 		public void Overrides(OverrideAdapter controller)
 		{
-			foreach (var button in controller.Overrides)
+			try
 			{
-				_buttons[button] = controller.IsPressed(button);
-			}
+				var buttons = controller.GetOverrides()
+					.Keys.ToArray();
+				for (int i = 0; i < buttons.Length; i++)
+				{
+					_buttons[buttons[i]] = controller.IsPressed(buttons[i]);
+				}
+				
+				//Does not work if controller Override is overrided in another thread. 
+				//foreach (var button in controller.Overrides)
+				//{
+				//	_buttons[button] = controller.IsPressed(button);
+				//}
 
-			foreach (var button in controller.AxisOverrides)
-			{
-				_axes[button] = controller.AxisValue(button);
-			}
+				foreach (var button in controller.AxisOverrides)
+				{
+					_axes[button] = controller.AxisValue(button);
+				}
 
-			foreach (var button in controller.InversedButtons)
+				foreach (var button in controller.InversedButtons)
+				{
+					_buttons[button] ^= true;
+				}
+			}
+			catch (InvalidOperationException e)
 			{
-				_buttons[button] ^= true;
+				Console.WriteLine("Get operation exception: " + e.Message);
+				Console.WriteLine(e.StackTrace);
 			}
 		}
 
