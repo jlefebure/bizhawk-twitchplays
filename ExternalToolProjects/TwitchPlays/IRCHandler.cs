@@ -269,7 +269,7 @@ namespace TwitchPlays
 							() => ButtonCombo(BtnConst.Right, 300, int.Parse(Regex.Match(someVal, @"\d+").Value)),
 							true));
 						break;
-					case var someVal when new Regex(@"^!tppsetmaxcombo [0-9]$").IsMatch(someVal):
+					case var someVal when new Regex(@"^!tp setmaxcombo [0-9]$").IsMatch(someVal):
 						if (isMod)
 						{
 							var value = int.Parse(someVal.Split(' ')[1]);
@@ -279,7 +279,7 @@ namespace TwitchPlays
 
 						break;
 
-					case "!tpppause":
+					case "!tp pause":
 						if (isMod)
 						{
 							ActionsQueue.PauseQueue();
@@ -287,7 +287,7 @@ namespace TwitchPlays
 						}
 
 						break;
-					case "!tppresume":
+					case "!tp resume":
 						if (isMod)
 						{
 							ActionsQueue.ResumeQueue();
@@ -295,7 +295,7 @@ namespace TwitchPlays
 						}
 
 						break;
-					case "!tppsave":
+					case "!tp save":
 						if (isMod)
 						{
 							_saveService.Save();
@@ -303,21 +303,21 @@ namespace TwitchPlays
 						}
 
 						break;
-					case "!tppautosave off":
+					case "!tp autosave off":
 						if (isMod)
 						{
 							_saveService.StopTask();
 						}
 
 						break;
-					case "!tppautosave on":
+					case "!tp autosave on":
 						if (isMod)
 						{
 							_saveService.StartTask();
 						}
 
 						break;
-					case "!tppload":
+					case "!tp load":
 						if (isMod)
 						{
 							_saveService.Load();
@@ -325,7 +325,7 @@ namespace TwitchPlays
 						}
 
 						break;
-					case var someVal when new Regex(@"^!tppload [1-9]$").IsMatch(someVal):
+					case var someVal when new Regex(@"^!tp load [1-9][1-9]$").IsMatch(someVal):
 						if (isMod)
 						{
 							int val = int.Parse(Regex.Match(someVal, @"\d+").Value);
@@ -334,21 +334,21 @@ namespace TwitchPlays
 						}
 
 						break;
-					case "!tppemupause":
+					case "!tp emupause":
 						if (isMod)
 						{
 							MainControlHandler.SafeInvoke(_mainControl, () => { _apIs.EmuClient.Pause(); }, false);
 						}
 
 						break;
-					case "!tppemuresume":
+					case "!tp emuresume":
 						if (isMod)
 						{
 							MainControlHandler.SafeInvoke(_mainControl, () => { _apIs.EmuClient.Unpause(); }, false);
 						}
 
 						break;
-					case "!tppclearqueue":
+					case "!tp clearqueue":
 						if (isMod)
 						{
 							ActionsQueue.EmptyQueue();
@@ -357,7 +357,7 @@ namespace TwitchPlays
 						}
 
 						break;
-					case "!tppmodonly":
+					case "!tp modonly":
 						if (isMod)
 						{
 							SendMsg("Twitch Plays : Only moderation can send actions.");
@@ -365,7 +365,7 @@ namespace TwitchPlays
 						}
 
 						break;
-					case "!tppfree":
+					case "!tp free":
 						if (isMod)
 						{
 							SendMsg("Twitch Plays : Everyone can send actions.");
