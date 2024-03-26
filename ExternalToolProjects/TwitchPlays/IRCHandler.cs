@@ -239,7 +239,16 @@ namespace TwitchPlays
 						ActionsQueue.EnqueueTask(new InputTask(
 							() => ButtonCombo(BtnConst.Up, 300, int.Parse(Regex.Match(someVal, @"\d+").Value)), true));
 						break;
+					case var someVal when new Regex(@"^up[1-9]$").IsMatch(someVal):
+						ActionsQueue.EnqueueTask(new InputTask(
+							() => ButtonCombo(BtnConst.Up, 300, int.Parse(Regex.Match(someVal, @"\d+").Value)), true));
+						break;
 					case var someVal when new Regex(@"^bas[1-9]$").IsMatch(someVal):
+						ActionsQueue.EnqueueTask(new InputTask(
+							() => ButtonCombo(BtnConst.Down, 300, int.Parse(Regex.Match(someVal, @"\d+").Value)),
+							true));
+						break;
+					case var someVal when new Regex(@"^down[1-9]$").IsMatch(someVal):
 						ActionsQueue.EnqueueTask(new InputTask(
 							() => ButtonCombo(BtnConst.Down, 300, int.Parse(Regex.Match(someVal, @"\d+").Value)),
 							true));
@@ -264,7 +273,17 @@ namespace TwitchPlays
 							() => ButtonCombo(BtnConst.Left, 300, int.Parse(Regex.Match(someVal, @"\d+").Value)),
 							true));
 						break;
+					case var someVal when new Regex(@"^left[1-9]$").IsMatch(someVal):
+						ActionsQueue.EnqueueTask(new InputTask(
+							() => ButtonCombo(BtnConst.Left, 300, int.Parse(Regex.Match(someVal, @"\d+").Value)),
+							true));
+						break;
 					case var someVal when new Regex(@"^droite[1-9]$").IsMatch(someVal):
+						ActionsQueue.EnqueueTask(new InputTask(
+							() => ButtonCombo(BtnConst.Right, 300, int.Parse(Regex.Match(someVal, @"\d+").Value)),
+							true));
+						break;
+					case var someVal when new Regex(@"^right[1-9]$").IsMatch(someVal):
 						ActionsQueue.EnqueueTask(new InputTask(
 							() => ButtonCombo(BtnConst.Right, 300, int.Parse(Regex.Match(someVal, @"\d+").Value)),
 							true));
