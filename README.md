@@ -45,19 +45,19 @@ Every user can send inputs directly via your Twitch chat. Following inputs are c
 #### Simple inputs
 
 Input|Corresponding key
-**|**
-up, haut, h | Up
-down, bas | Down
-left, gauche, g | Left
-right, droite, droit, d | Right
-a | A
-b | B
-x | X
-y | Y
-zr | ZR
-zl | ZL
-l | L
-r | R
+| --- | --- |
+`up`, `haut`, `h` | Up
+`down`, `bas` | Down
+`left`, `gauche`, `g` | Left
+`right`, `droite`, `droit`, `d` | Right
+`a` | A
+`b` | B
+`x` | X
+`y` | Y
+`zr` | ZR
+`zl` | ZL
+`l` | L
+`r` | R
 
 #### Combo moves
 Users can use combo moves. For example, using `h8` will keep the `Up` input longer than a simple input `h`. On many games, it will allow a character to move 8 steps to the top. 
@@ -65,30 +65,34 @@ Users can use combo moves. For example, using `h8` will keep the `Up` input long
 Streamer and moderator can disable this feature via Twitch command. It is also possible to set the maximum combo move. By default, it is possible to make 9 combo moves. To avoid spamming, only 3 combo moves can be queued at the same time. This value is editable.
 
 Input|Corresponding key
-**|**
-h[1-9], up[1-9], haut[1-9] | Up
-down[1-9], bas[1-9], b[1-9] | Down
-left[1-9], gauche[1-9], g[1-9] | Left
-right[1-9], droite[1-9], d[1-9] | Right
+| --- | --- |
+`h[1-9]`, `up[1-9]`, `haut[1-9]` | Up
+`down[1-9]`, `bas[1-9]`, `b[1-9]` | Down
+`left[1-9]`, `gauche[1-9]`, `g[1-9]` | Left
+`right[1-9]`, `droite[1-9]`, `d[1-9]` | Right
 
 ### Twitch Commands
 
 Streamer and moderators of the Twitch channel can setup various things by typing these commands on the chat. 
 
 Command|Behaviour
-**|**
-!tp pause | Pause the input reading for everyone
-!tp resume | Resume the input reading for everyone
-!tp save | Launch a save state
-!tp load [x] | Load a save state. Without arg, it will load the last save state. With an argument, it will load the n-x last save state. For exemple, `!tp load 2` will load the 2 most recent save state.
-!tp autosave off | Disable the automatic save state every 10 minutes
-!tp autosave on | Enable the automatic save state every 10 minutes (default behaviour)
-!tp emupause | Pause the emulator
-!tp emuresume | Resume the emulator
-!tp clearqueue | Clear the queued actions and release all inputs that have been pressed
-!tp modonly | Only moderators and streamer can send actions
-!tp free | Remove the previous behaviour
-!tp setmaxcombo [1-9] | Set the maximum combo move value
+| --- | --- |
+`!tp pause` | Pause the input reading for everyone
+`!tp resume` | Resume the input reading for everyone
+`!tp save` | Launch a save state
+`!tp load [x]` | Load a save state. Without arg, it will load the last save state. With an argument, it will load the n-x last save state. For exemple, `!tp load 2` will load the 2 most recent save state.
+`!tp autosave off` | Disable the automatic save state every 10 minutes
+`!tp autosave on` | Enable the automatic save state every 10 minutes (default behaviour)
+`!tp emupause` | Pause the emulator
+`!tp emuresume` | Resume the emulator
+`!tp clearqueue` | Clear the queued actions and release all inputs that have been pressed
+`!tp modonly` | Only moderators and streamer can send actions
+`!tp free` | Remove the previous behaviour
+`!tp setmaxcombo [1-9]` | Set the maximum combo move value
+
+## Support
+
+You can open a ticket on this repo, or contact me via Discord (Kaoxyd) or [Twitch](https://twitch.tv/kaoxyd)
 
 ## Credits
 
