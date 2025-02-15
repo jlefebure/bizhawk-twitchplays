@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using BizHawk.Client.Common;
 using BizHawk.Client.EmuHawk;
@@ -18,6 +19,7 @@ public sealed partial class TwitchPlays : ToolFormBase, IExternalToolForm
         InitializeComponent();
     }
 
+    private RESTApi _restApi = new RESTApi("http://localhost:5000/");
     public bool IsStarted;
 
     public ApiContainer? MaybeApiContainer { get; set; }
@@ -177,6 +179,47 @@ public sealed partial class TwitchPlays : ToolFormBase, IExternalToolForm
         this.Name = "TwitchPlays";
         this.ResumeLayout(false);
         this.PerformLayout();
+        _restApi.StartAsync(); 
+        _restApi.RegisterEndpoint("/start", async (request) =>
+        {
+	        using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
+	        {
+		        string requestBody = await reader.ReadToEndAsync();
+		        Console.WriteLine($"Received: {requestBody}");
+		        Start();
+		        return "{\"response\": \"Server Started!\"}";
+	        }
+        });
+        _restApi.RegisterEndpoint("/stop", async (request) =>
+        {
+	        using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
+	        {
+		        string requestBody = await reader.ReadToEndAsync();
+		        Console.WriteLine($"Received: {requestBody}");
+		        Stop();
+		        return "{\"response\": \"Server Stopped!\"}";
+	        }
+        });
+		_restApi.RegisterEndpoint("/load", async (request) =>
+		{
+			using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
+			{
+				string requestBody = await reader.ReadToEndAsync();
+				Console.WriteLine($"Received: {requestBody}");
+				_saveService.Load();
+				return "{\"response\": \"last save state loaded!\"}";
+			}
+		});
+		_restApi.RegisterEndpoint("/save", async (request) =>
+		{
+			using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
+			{
+				string requestBody = await reader.ReadToEndAsync();
+				Console.WriteLine($"Received: {requestBody}");
+				_saveService.Save();
+				return "{\"response\": \"last save state loaded!\"}";
+			}
+		});
     }
 
 
@@ -199,27 +242,36 @@ public sealed partial class TwitchPlays : ToolFormBase, IExternalToolForm
     {
         if (!IsStarted)
         {
-            ConfigService.Save(TwitchPlaysConfig.ControlDefaultPath, config);
-            var ircHandler = new IRCHandler(tppLoginComponent.Text, tppOauthTokenComponent.Text,
-                tppChannelTwitchComponent.Text, APIs, _saveService, this);
-            Thread thread = new Thread(ircHandler.RunIRC);
-            _ircThread = thread;
-            thread.Start();
-            IsStarted = true;
-            tppLaunchComponent.Text = "Stop";
-            tppSaveStateComponent.Enabled = true;
-            tppLoadStateComponent.Enabled = true;
-
+	        Start();
         }
         else
         {
-            _saveService.StopTask();
-            _ircThread.Abort();
-            IsStarted = false;
-            tppLaunchComponent.Text = "Start";
-            tppSaveStateComponent.Enabled = false;
-            tppLoadStateComponent.Enabled = false;
+	        Stop();
         }
+    }
+
+    private void Stop()
+    {
+	    _saveService.StopTask();
+	    _ircThread.Abort();
+	    IsStarted = false;
+	    tppLaunchComponent.Text = "Start";
+	    tppSaveStateComponent.Enabled = false;
+	    tppLoadStateComponent.Enabled = false;
+    }
+
+    private void Start()
+    {
+	    ConfigService.Save(TwitchPlaysConfig.ControlDefaultPath, config);
+	    var ircHandler = new IRCHandler(tppLoginComponent.Text, tppOauthTokenComponent.Text,
+		    tppChannelTwitchComponent.Text, APIs, _saveService, this);
+	    Thread thread = new Thread(ircHandler.RunIRC);
+	    _ircThread = thread;
+	    thread.Start();
+	    IsStarted = true;
+	    tppLaunchComponent.Text = "Stop";
+	    tppSaveStateComponent.Enabled = true;
+	    tppLoadStateComponent.Enabled = true;
     }
 
     protected override void OnShown(EventArgs e)
